@@ -1,13 +1,13 @@
 {
-  "name": "graphql-boilerplate",
+  "name": "graphql-expressjs-boilerplate",
   "version": "1.0.0",
-  "description": "",
-  "author": "",
+  "description": "Starter for a flexible and scalable GraphQL server for Nodejs with Expressjs",
+  "author": "Leonardo B. Castro",
   "license": "MIT",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js --inspect",
-    "prod": "babel-node src/index.js",
+    "prod": "NODE_ENV=production babel-node src/index.js",
     "test": "npx mocha"
   },
   "mocha": {
