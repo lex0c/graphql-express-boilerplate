@@ -61,7 +61,7 @@ Starter for a flexible and scalable GraphQL server for Nodejs with Expressjs.
 ### Scripts
 - **npm start**
 
-     Start nodemoon dev server
+     Start nodemon dev server
 
 - **npm run prod**
 
