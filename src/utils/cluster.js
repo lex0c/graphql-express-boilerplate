@@ -4,12 +4,12 @@ import { cpus } from 'os';
 const cpusAvailable = cpus();
 
 const upWorkerProcesses = () => {
-  console.log(`Master cluster setting up ${cpusAvailable.length} workers`);
+  global.console.log(`Master cluster setting up ${cpusAvailable.length} workers`);
   cpusAvailable.forEach(() => cluster.fork());
-  cluster.on('online', worker => console.log(`Worker ${worker.process.pid} is listening`));
+  cluster.on('online', worker => global.console.log(`Worker ${worker.process.pid} is listening`));
   cluster.on('exit', (worker, code, signal) => {
-    console.log(`Worker ${worker.process.pid} died with code: ${code}, and signal: ${signal}`);
-    console.log('Starting a new worker');
+    global.console.log(`Worker ${worker.process.pid} died with code: ${code}, and signal: ${signal}`);
+    global.console.log('Starting a new worker');
     cluster.fork();
   });
 };

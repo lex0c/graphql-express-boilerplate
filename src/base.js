@@ -17,6 +17,6 @@ const resolversBase = {
   Mutation: { _empty: () => '' },
 };
 
-export const typeDefs = schemaBase.concat(services.schemas).replace(/\,/g, '');
+export const typeDefs = schemaBase.concat(services.schemas).replace(/,/g, '');
 export const resolvers = merge(resolversBase, services.resolvers);
 export default makeExecutableSchema({ typeDefs, resolvers });

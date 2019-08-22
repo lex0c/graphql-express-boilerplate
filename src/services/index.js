@@ -15,7 +15,7 @@ try {
     }
   });
 } catch (err) {
-  console.error(err);
+  global.console.error(err);
 }
 
 export default {
