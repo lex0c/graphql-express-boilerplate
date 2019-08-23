@@ -2,8 +2,6 @@
 
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/lleocastro/encryptor/issues)
 
-> A simple Graphql boilerplate
-
 Starter for a flexible and scalable GraphQL server for Nodejs with Expressjs.
 
 ### Quickstart
@@ -36,6 +34,7 @@ Starter for a flexible and scalable GraphQL server for Nodejs with Expressjs.
 |   |   |   └── index.js
 |   |   ├── utils/
 |   |   |   └── ...
+|   |   ├── app.js
 |   |   ├── base.js
 |   |   ├── constants.js
 |   |   ├── index.js
@@ -44,12 +43,12 @@ Starter for a flexible and scalable GraphQL server for Nodejs with Expressjs.
 |   |   └── ...
 |   └── tests/
 |   |   └── ...
-├── .eslintignore
 ├── .eslintrc
 ├── .babelrc
 ├── .editorconfig
 ├── package.json
 ├── package-lock.json
+├── nodemon.json
 ├── nginx.conf
 ├── Dockerfile
 ├── docker-compose.yml
