@@ -17,12 +17,14 @@
     "__filename": true,
     "Promise": true,
     "setTimeout": true,
-    "setInterval": true
+    "setInterval": true,
+    "describe": true,
+    "it": true,
+    "expect": true
   },
   "overrides": [
     {
-      "files": ["src/*.js"],
-      "excludedFiles": "*.test.js"
+      "files": ["src/**/*.js", "tests/**/*.js"],
     }
   ]
 }

@@ -5,7 +5,7 @@ import services from './services';
 
 const schemaBase = `
   type Query {
-    _empty: String
+    test: String
   }
   type Mutation {
     _empty(id: ID): String
@@ -13,7 +13,7 @@ const schemaBase = `
 `;
 
 const resolversBase = {
-  Query: { _empty: () => '' },
+  Query: { test: () => 'ok' },
   Mutation: { _empty: () => '' },
 };
 
