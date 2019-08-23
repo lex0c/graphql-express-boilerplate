@@ -17,7 +17,14 @@ export default () => {
   const app = express();
 
   app.use(helmet());
-  app.use(cors());
+
+  app.use(bodyParser.json({ limit: '10mb', extended: true }));
+
+  app.use(cors({
+    origin: '*', // TODO: set your origin!
+    methods: 'GET,POST',
+    optionsSuccessStatus: 200,
+  }));
 
   app.use('/graphql', graphqlHTTP(req => ({
     schema,
@@ -47,8 +54,6 @@ export default () => {
     },
     graphiql: !isProductionMode,
   })));
-
-  app.use(bodyParser.text({ extended: true }));
 
   return app;
 };
