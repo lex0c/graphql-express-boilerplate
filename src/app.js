@@ -30,7 +30,7 @@ export default () => {
     schema,
     context: {
       isProductionMode,
-      dbInstance: null,
+      dbInstance: null, // TODO: configure DB and pass the instance here!
       auth: {
         user: getUserByToken(req.headers[TOKEN_HEADER_NAME]),
         token: extractToken(req.headers[TOKEN_HEADER_NAME]),
@@ -39,7 +39,7 @@ export default () => {
     },
     extensions: ({ context }) => {
       return {
-        queryTimeMeasurement: moment().milliseconds() - context.startTime,
+        queryTimeMeasurement: (moment().milliseconds() - context.startTime),
       };
     },
     customFormatErrorFn: err => {
