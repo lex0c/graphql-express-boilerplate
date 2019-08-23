@@ -1,4 +1,5 @@
 import { makeExecutableSchema } from 'graphql-tools';
+import { GraphQLUpload } from 'graphql-upload'
 import { merge } from 'lodash';
 
 import services from './services';
@@ -10,11 +11,13 @@ const schemaBase = `
   type Mutation {
     _empty(id: ID): String
   }
+  scalar Upload
 `;
 
 const resolversBase = {
   Query: { test: () => 'ok' },
   Mutation: { _empty: () => '' },
+  Upload: GraphQLUpload,
 };
 
 export const typeDefs = schemaBase.concat(services.schemas).replace(/,/g, '');
