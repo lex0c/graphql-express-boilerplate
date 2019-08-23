@@ -2,8 +2,6 @@
 
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/lleocastro/encryptor/issues)
 
-> A simple Graphql boilerplate
-
 Starter for a flexible and scalable GraphQL server for Nodejs with Expressjs.
 
 ### Quickstart
@@ -11,6 +9,9 @@ Starter for a flexible and scalable GraphQL server for Nodejs with Expressjs.
 1. **Clone this repository**
 
     `git clone https://github.com/lleocastro/graphql-express-boilerplate.git`
+    
+   ##### or use as template 
+   [https://github.com/lleocastro/graphql-express-boilerplate/generate](https://github.com/lleocastro/graphql-express-boilerplate/generate)
 
 2. **Install dependencies**
 
@@ -36,6 +37,7 @@ Starter for a flexible and scalable GraphQL server for Nodejs with Expressjs.
 |   |   |   └── index.js
 |   |   ├── utils/
 |   |   |   └── ...
+|   |   ├── app.js
 |   |   ├── base.js
 |   |   ├── constants.js
 |   |   ├── index.js
@@ -44,12 +46,12 @@ Starter for a flexible and scalable GraphQL server for Nodejs with Expressjs.
 |   |   └── ...
 |   └── tests/
 |   |   └── ...
-├── .eslintignore
 ├── .eslintrc
 ├── .babelrc
 ├── .editorconfig
 ├── package.json
 ├── package-lock.json
+├── nodemon.json
 ├── nginx.conf
 ├── Dockerfile
 ├── docker-compose.yml
