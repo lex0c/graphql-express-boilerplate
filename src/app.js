@@ -5,13 +5,18 @@ import helmet from 'helmet';
 import cors from 'cors';
 import moment from 'moment';
 
+import { ENV_PROD, ENV_TEST, TOKEN_HEADER_NAME } from './constants';
+
+require('dotenv').config({
+  path: process.env.NODE_ENV !== ENV_TEST ? '.env' : '.env.test',
+  debug: process.env.DEBUG || false,
+});
+
 import { getUserByToken, extractToken } from './utils/auth';
 
 import schema from './base';
 
-import { PROD, TOKEN_HEADER_NAME } from './constants';
-
-export const isProductionMode = process.env.NODE_ENV === PROD;
+export const isProductionMode = process.env.NODE_ENV === ENV_PROD;
 
 export default () => {
   const app = express();
