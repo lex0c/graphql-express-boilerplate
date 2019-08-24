@@ -2,13 +2,11 @@ import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
 
-import dbConfig from '../../config/database';
-
 const basename = path.basename(__filename);
 
 const db = {};
 
-const sequelize = new Sequelize(dbConfig.sequelize);
+const sequelize = new Sequelize(require('../../config/sequelize'));
 
 try {
   fs.readdirSync(__dirname).filter(file => {

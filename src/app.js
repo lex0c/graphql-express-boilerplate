@@ -7,16 +7,16 @@ import moment from 'moment';
 
 import { ENV_PROD, ENV_TEST, TOKEN_HEADER_NAME } from './constants';
 
+export const isProductionMode = process.env.NODE_ENV === ENV_PROD;
+
 require('dotenv').config({
   path: process.env.NODE_ENV !== ENV_TEST ? '.env' : '.env.test',
-  debug: process.env.DEBUG || false,
+  debug: !isProductionMode,
 });
 
 import { getUserByToken, extractToken } from './utils/auth';
 
 import schema from './base';
-
-export const isProductionMode = process.env.NODE_ENV === ENV_PROD;
 
 export default () => {
   const app = express();

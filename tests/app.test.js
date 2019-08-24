@@ -1,5 +1,5 @@
 import request from 'supertest';
-import 'babel-polyfill';
+import '@babel/polyfill';
 
 import setup from '../src/app';
 
