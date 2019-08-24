@@ -11,8 +11,8 @@
     "orm": "npx sequelize",
     "lint": "npx eslint .",
     "test": "NODE_ENV=test npx jest",
-    "pretest": "NODE_ENV=test npm run orm -- db:migrate",
-    "posttest": "NODE_ENV=test npm run orm -- db:migrate:undo:all"
+    "pretest": "NODE_ENV=test npx sequelize db:migrate && NODE_ENV=test npx sequelize db:seed:all",
+    "posttest": "NODE_ENV=test npx sequelize db:seed:undo:all && NODE_ENV=test npx sequelize db:migrate:undo:all"
   },
   "jest": {
     "verbose": true,
