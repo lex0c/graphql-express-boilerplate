@@ -20,11 +20,13 @@
     "setInterval": true,
     "describe": true,
     "it": true,
-    "expect": true
+    "expect": true,
+    "module": true,
+    "beforeAll": true
   },
   "overrides": [
     {
-      "files": ["src/**/*.js", "tests/**/*.js"],
+      "files": ["src/**/*.js", "tests/**/*.js", "database/**/*.js"],
     }
   ]
 }

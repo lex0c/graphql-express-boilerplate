@@ -8,8 +8,11 @@
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js --inspect",
     "prod": "npm run lint && NODE_ENV=production babel-node src/index.js",
+    "orm": "npx sequelize",
     "lint": "npx eslint .",
-    "test": "NODE_ENV=test npx jest"
+    "test": "NODE_ENV=test npx jest",
+    "pretest": "NODE_ENV=test npm run orm -- db:migrate",
+    "posttest": "NODE_ENV=test npm run orm -- db:migrate:undo:all"
   },
   "jest": {
     "verbose": true,
@@ -18,7 +21,10 @@
     "collectCoverageFrom": [
       "tests/**/*.{js}",
       "!**/node_modules/**"
-    ]
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
   },
   "dependencies": {
     "@babel/core": "^7.5.5",
@@ -38,15 +44,21 @@
     "helmet": "^3.12.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "pg": "^7.12.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.16.0"
   },
   "devDependencies": {
+    "@babel/polyfill": "^7.4.4",
+    "@babel/register": "^7.5.5",
     "babel-eslint": "^8.2.6",
     "babel-jest": "^24.9.0",
-    "babel-polyfill": "^6.26.0",
     "eslint": "^4.19.1",
     "jest": "^24.9.0",
     "nodemon": "^1.19.1",
+    "sequelize-cli": "^5.5.0",
+    "sqlite3": "^4.1.0",
     "supertest": "^4.0.2"
   }
 }

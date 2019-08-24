@@ -9,7 +9,6 @@ import { ENV_PROD, ENV_TEST, TOKEN_HEADER_NAME } from './constants';
 
 require('dotenv').config({
   path: process.env.NODE_ENV !== ENV_TEST ? '.env' : '.env.test',
-  debug: process.env.DEBUG || false,
 });
 
 import { getUserByToken, extractToken } from './utils/auth';
