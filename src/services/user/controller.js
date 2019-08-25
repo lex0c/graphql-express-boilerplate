@@ -21,7 +21,7 @@ export default class Controller {
 
     if (user) {
       const { dataValues } = user;
-      const match = await bcrypt.compare(input.password, dataValues.passwordHash);
+      const match = await bcrypt.compare(input.password, dataValues.password);
       if (match) {
         return {
           token: encode({

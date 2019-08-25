@@ -33,7 +33,7 @@ export const schemas = `
 
 export const resolvers = {
   Query: {
-    me: (_, args, { auth }) => {
+    me: (_, __, { auth }) => {
       checkAuthorization(auth);
       return { ...auth.user };
     },

@@ -17,7 +17,7 @@ export default (sequelize, DataTypes) => {
       field: 'email',
       validate: { isEmail: true },
     },
-    passwordHash: {
+    password: {
       type: DataTypes.STRING,
       field: 'password_hash',
       validate: { min: 6 },
