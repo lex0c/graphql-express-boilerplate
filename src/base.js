@@ -12,6 +12,7 @@ const schemaBase = `
     _empty(id: ID): String
   }
   scalar Upload
+  scalar Date
 `;
 
 const resolversBase = {

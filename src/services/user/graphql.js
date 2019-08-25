@@ -6,9 +6,16 @@ export const schemas = `
     me: User!
   }
   extend type Mutation {
-    auth(input: AuthInput): AuthData!
+    auth(input: AuthInput!): AuthData!
+    createUser(input: CreateUserInput!): User
   }
   input AuthInput {
+    email: String!
+    password: String!
+  }
+  input CreateUserInput {
+    firstName: String!
+    lastName: String!
     email: String!
     password: String!
   }
@@ -17,7 +24,10 @@ export const schemas = `
   }
   type User {
     id: ID!
+    firstName: String
+    lastName: String
     email: String
+    createdAt: Date
   }
 `;
 
@@ -31,6 +41,9 @@ export const resolvers = {
   Mutation: {
     auth: (_, args, context) => {
       return Controller.authenticate(args, context);
+    },
+    createUser: (_, args, context) => {
+      return Controller.createUser(args, context);
     },
   },
 };
