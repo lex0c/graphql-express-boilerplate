@@ -23,7 +23,7 @@ export const schemas = `
     token: String!
   }
   type User {
-    id: Int!
+    id: Int
     firstName: String
     lastName: String
     email: String
@@ -33,9 +33,9 @@ export const schemas = `
 
 export const resolvers = {
   Query: {
-    me: (_, args, context) => {
-      checkAuthorization(context.auth.user);
-      return { id: 1, email: 'foo@mail.com' };
+    me: (_, args, { auth }) => {
+      checkAuthorization(auth);
+      return { ...auth.user };
     },
   },
   Mutation: {

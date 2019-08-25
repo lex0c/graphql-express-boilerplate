@@ -1,9 +1,11 @@
+import bcrypt from 'bcrypt';
+
 import { encode } from '../../utils/auth';
-import loader from '../../utils/loader';
 
-import { userById } from './loaders';
-
-import { USER_EMAIL_ALREADY_IN_USE } from '../../constants';
+import {
+  USER_EMAIL_ALREADY_IN_USE,
+  EMAIL_OR_PASSWORD_INCORRECT,
+} from '../../constants';
 
 export default class Controller {
   static async createUser({ input }, { db: { sequelize } }) {
@@ -14,16 +16,24 @@ export default class Controller {
     throw new Error(USER_EMAIL_ALREADY_IN_USE);
   }
 
-  static async authenticate(_, context) {
-    return { token: encode(context.auth.token) };
-  }
+  static async authenticate({ input }, { db: { sequelize } }) {
+    const user = await sequelize.User.findOne({ where: { email: input.email } });
 
-  static async me(_, context) {
-    const user = context.auth.user;
-    const resp = await loader({
-      cacheKey: `me:${user.id}`,
-      loaderInstance: userById(user),
-    });
-    return resp;
+    if (user) {
+      const { dataValues } = user;
+      const match = await bcrypt.compare(input.password, dataValues.passwordHash);
+      if (match) {
+        return {
+          token: encode({
+            id: dataValues.id,
+            email: dataValues.email,
+            firstName: dataValues.firstName,
+            lastName: dataValues.lastName,
+          }),
+        };
+      }
+    }
+
+    throw new Error(EMAIL_OR_PASSWORD_INCORRECT);
   }
 }
