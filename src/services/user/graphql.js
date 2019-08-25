@@ -23,7 +23,7 @@ export const schemas = `
     token: String!
   }
   type User {
-    id: ID!
+    id: Int!
     firstName: String
     lastName: String
     email: String
