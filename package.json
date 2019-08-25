@@ -10,7 +10,7 @@
     "prod": "npm run lint && NODE_ENV=production babel-node src/index.js",
     "orm": "npx sequelize",
     "lint": "npx eslint .",
-    "test": "NODE_ENV=test npx jest --colors",
+    "test": "NODE_ENV=test npx jest --colors --testPathIgnorePatterns tests/test.js",
     "pretest": "NODE_ENV=test npx sequelize db:migrate && NODE_ENV=test npx sequelize db:seed:all",
     "posttest": "NODE_ENV=test npx sequelize db:seed:undo:all && NODE_ENV=test npx sequelize db:migrate:undo:all"
   },

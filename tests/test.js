@@ -10,18 +10,6 @@ export const graphqlQueryBuilder = (query, variables) => ({
   variables,
 });
 
-it('graphqlQueryBuilder', () => {
-  const query = `
-    test {
-      message
-    }
-  `;
-  const variables = { foo: 'bar' };
-  const result = graphqlQueryBuilder(query, variables);
-  expect(result).toHaveProperty('query', query);
-  expect(result).toHaveProperty('variables.foo', 'bar');
-});
-
 export const graphqlTest = (
   query,
   variables,
