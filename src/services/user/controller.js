@@ -5,12 +5,10 @@ import { userById } from './loaders';
 
 import { USER_EMAIL_EXISTS } from '../../constants';
 
-const { User } = require('../../models').default;
-
 export default class Controller {
-  static async createUser({ input }) {
-    if (!(await User.findOne({ where: { email: input.email } }))) {
-      return User.create(input);
+  static async createUser({ input }, { db }) {
+    if (!(await db.User.findOne({ where: { email: input.email } }))) {
+      return db.User.create(input);
     }
 
     throw new Error(USER_EMAIL_EXISTS);

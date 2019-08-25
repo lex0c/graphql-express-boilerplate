@@ -34,7 +34,7 @@ export default () => {
     schema,
     context: {
       isProductionMode,
-      dbInstance: null, // TODO: configure DB and pass the instance here!
+      db: require('./models').default,
       auth: {
         user: getUserByToken(req.headers[TOKEN_HEADER_NAME]),
         token: extractToken(req.headers[TOKEN_HEADER_NAME]),
