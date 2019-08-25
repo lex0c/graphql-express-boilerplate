@@ -3,15 +3,15 @@ import loader from '../../utils/loader';
 
 import { userById } from './loaders';
 
-import { USER_EMAIL_EXISTS } from '../../constants';
+import { USER_EMAIL_ALREADY_IN_USE } from '../../constants';
 
 export default class Controller {
-  static async createUser({ input }, { db }) {
-    if (!(await db.User.findOne({ where: { email: input.email } }))) {
-      return db.User.create(input);
+  static async createUser({ input }, { db: { sequelize } }) {
+    if (!(await sequelize.User.findOne({ where: { email: input.email } }))) {
+      return sequelize.User.create(input);
     }
 
-    throw new Error(USER_EMAIL_EXISTS);
+    throw new Error(USER_EMAIL_ALREADY_IN_USE);
   }
 
   static async authenticate(_, context) {
