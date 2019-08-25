@@ -17,15 +17,10 @@ export default (sequelize, DataTypes) => {
       field: 'email',
       validate: { isEmail: true },
     },
-    password: {
+    passwordHash: {
       type: DataTypes.STRING,
-      field: 'password',
+      field: 'password_hash',
       validate: { min: 6 },
-    },
-    saltRounds: {
-      type: DataTypes.INTEGER,
-      field: 'salt_rounds',
-      validate: { isInt: true },
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -38,7 +33,6 @@ export default (sequelize, DataTypes) => {
     const saltRounds = parseInt(process.env.SALT_ROUNDS, 10);
     const phash = await bcrypt.hash(dataValues.password, saltRounds);
     dataValues.password = phash;
-    dataValues.saltRounds = saltRounds;
     return dataValues;
   });
 
