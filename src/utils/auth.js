@@ -13,4 +13,7 @@ export const checkAuthorization = user => {
 
 export const getUserByToken = token => token && decode(extractToken(token));
 
-export const extractToken = rawToken => rawToken && rawToken.split(' ')[1].trim();
+export const extractToken = rawToken => {
+  const token = rawToken && rawToken.split(' ')[1];
+  return token && token.trim();
+};
