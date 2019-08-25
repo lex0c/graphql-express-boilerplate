@@ -34,7 +34,9 @@ export default () => {
     schema,
     context: {
       isProductionMode,
-      db: require('./models').default,
+      db: {
+        sequelize: require('./models').default,
+      },
       auth: {
         user: getUserByToken(req.headers[TOKEN_HEADER_NAME]),
         token: extractToken(req.headers[TOKEN_HEADER_NAME]),
@@ -43,7 +45,7 @@ export default () => {
     },
     extensions: ({ context }) => {
       return {
-        queryTimeMeasurement: (moment().milliseconds() - context.startTime),
+        queryTimeMeasurement: Math.abs(moment().milliseconds() - context.startTime),
       };
     },
     customFormatErrorFn: err => {
