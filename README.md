@@ -27,6 +27,8 @@ Starter for a flexible and scalable GraphQL server for Nodejs with Expressjs.
 ```
 
 ├── /
+|   ├── config/
+|   |   └── ...
 |   ├── src/
 |   |   ├── services/
 |   |   |   ├── user/
