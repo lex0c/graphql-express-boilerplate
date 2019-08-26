@@ -42,6 +42,8 @@ Starter for a flexible and scalable GraphQL server for Nodejs with Expressjs.
 |   |   ├── constants.js
 |   |   ├── index.js
 |   |   └── ...
+|   ├── jobs/
+|   |   └── ...
 |   ├── scripts/
 |   |   └── ...
 |   └── tests/
@@ -77,6 +79,9 @@ Starter for a flexible and scalable GraphQL server for Nodejs with Expressjs.
 
      Runs unit tests
      
+- **npm run orm**
+
+     ORM super powers
      
 ### SECURITY
 
