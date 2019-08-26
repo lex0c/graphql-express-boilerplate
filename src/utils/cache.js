@@ -23,8 +23,6 @@ const client = redis.createClient({
   },
 });
 
-client.auth(process.env.REDIS_CLI_AUTH);
-
 client.getAsync = promisify(client.get).bind(client);
 
 client.flushAndQuit = () => {
@@ -40,3 +38,13 @@ client.on('error', (err) => {
 client.on('end', () => {});
 
 export default client;
+
+export const loaderWithCache = async ({
+  cacheKey, loaderInstance, keys,
+}) => {
+  const resp = loaderInstance.load(keys);
+  const cache = await client.getAsync(cacheKey);
+  if (!cache) client.set(cacheKey, JSON.stringify(await resp));
+  return Promise.race([Promise.resolve(JSON.parse(cache)), resp]);
+};
+

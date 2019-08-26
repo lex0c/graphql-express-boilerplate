@@ -38,9 +38,9 @@ export const resolvers = {
       checkAuthorization(auth);
       return { ...auth.user };
     },
-    users: (_, __, { auth, db }) => {
-      checkAuthorization(auth);
-      return Controller.getUsers(db);
+    users: (_, __, context) => {
+      checkAuthorization(context.auth);
+      return Controller.getUsers(context);
     },
   },
   Mutation: {

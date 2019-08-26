@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 
 import { encode } from '../../utils/auth';
+import { loaderWithCache } from '../../utils/cache';
 
 import {
   USER_EMAIL_ALREADY_IN_USE,
@@ -39,7 +40,11 @@ export default class Controller {
     throw new Error(EMAIL_OR_PASSWORD_INCORRECT);
   }
 
-  static async getUsers({ sequelize }) {
-    return getUsersLoader({ sequelize }).load([]);
+  static async getUsers({ db: { sequelize }, auth: { user } }) {
+    return loaderWithCache({
+      cacheKey: `users:${user.id}`,
+      loaderInstance: getUsersLoader({ sequelize }),
+      keys: [],
+    });
   }
 }
