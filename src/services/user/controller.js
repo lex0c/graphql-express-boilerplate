@@ -7,6 +7,8 @@ import {
   EMAIL_OR_PASSWORD_INCORRECT,
 } from '../../constants';
 
+import { getUsersLoader } from './loaders';
+
 export default class Controller {
   static async createUser({ input }, { db: { sequelize } }) {
     if (!(await sequelize.User.findOne({ where: { email: input.email } }))) {
@@ -35,5 +37,9 @@ export default class Controller {
     }
 
     throw new Error(EMAIL_OR_PASSWORD_INCORRECT);
+  }
+
+  static async getUsers({ sequelize }) {
+    return getUsersLoader({ sequelize }).load([]);
   }
 }
