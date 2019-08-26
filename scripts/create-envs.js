@@ -13,5 +13,5 @@ for (let key in files) {
     (err) => {
     if (err) throw err;
   });
-};
+}
 
