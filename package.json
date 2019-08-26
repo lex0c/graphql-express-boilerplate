@@ -60,6 +60,7 @@
     "faker": "^4.1.0",
     "jest": "^24.9.0",
     "nodemon": "^1.19.1",
+    "redis-mock": "^0.46.0",
     "sequelize-cli": "^5.5.0",
     "sqlite3": "^4.1.0",
     "supertest": "^4.0.2"
