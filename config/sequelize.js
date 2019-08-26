@@ -11,7 +11,7 @@ module.exports = {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   dialect: process.env.DB_DIALECT,
-  storage: './database/database.sqlite',
+  storage: './database/dbtest.sqlite',
   logging: false,
   define: {
     timestamps: true,
@@ -19,9 +19,8 @@ module.exports = {
     underscoredAll: true,
   },
   pool: {
-    max: 5,
+    max: 10,
     min: 0,
-    idle: 10000,
-    acquire: 30000,
+    idle: 30000,
   },
 };
