@@ -10,7 +10,7 @@
     "prod": "npm run lint && NODE_ENV=production babel-node src/index.js",
     "orm": "npx sequelize",
     "lint": "npx eslint .",
-    "test": "NODE_ENV=test npx jest",
+    "test": "NODE_ENV=test npx jest --colors --testPathIgnorePatterns tests/test.js",
     "pretest": "NODE_ENV=test npx sequelize db:migrate && NODE_ENV=test npx sequelize db:seed:all",
     "posttest": "NODE_ENV=test npx sequelize db:seed:undo:all && NODE_ENV=test npx sequelize db:migrate:undo:all"
   },
@@ -19,7 +19,7 @@
     "bail": 1,
     "browser": false,
     "collectCoverageFrom": [
-      "tests/**/*.{js}",
+      "src/**/*.{js}",
       "!**/node_modules/**"
     ],
     "transform": {
@@ -31,7 +31,7 @@
     "@babel/node": "^7.5.5",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
-    "babel-plugin-transform-optional-chaining": "^7.0.0-beta.3",
+    "bcrypt": "^3.0.6",
     "body-parser": "^1.18.2",
     "cors": "^2.8.5",
     "dataloader": "^1.4.0",
@@ -55,6 +55,7 @@
     "babel-eslint": "^8.2.6",
     "babel-jest": "^24.9.0",
     "eslint": "^4.19.1",
+    "faker": "^4.1.0",
     "jest": "^24.9.0",
     "nodemon": "^1.19.1",
     "sequelize-cli": "^5.5.0",

@@ -6,9 +6,16 @@ export const schemas = `
     me: User!
   }
   extend type Mutation {
-    auth(input: AuthInput): AuthData!
+    auth(input: AuthInput!): AuthData!
+    createUser(input: CreateUserInput!): User
   }
   input AuthInput {
+    email: String!
+    password: String!
+  }
+  input CreateUserInput {
+    firstName: String!
+    lastName: String!
     email: String!
     password: String!
   }
@@ -16,21 +23,27 @@ export const schemas = `
     token: String!
   }
   type User {
-    id: ID!
+    id: Int
+    firstName: String
+    lastName: String
     email: String
+    createdAt: Date
   }
 `;
 
 export const resolvers = {
   Query: {
-    me: (_, args, context) => {
-      checkAuthorization(context.auth.user);
-      return { id: 1, email: 'foo@mail.com' };
+    me: (_, __, { auth }) => {
+      checkAuthorization(auth);
+      return { ...auth.user };
     },
   },
   Mutation: {
     auth: (_, args, context) => {
       return Controller.authenticate(args, context);
+    },
+    createUser: (_, args, context) => {
+      return Controller.createUser(args, context);
     },
   },
 };
