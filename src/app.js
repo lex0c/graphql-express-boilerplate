@@ -15,7 +15,7 @@ import { getUserByToken, extractToken } from './utils/auth';
 
 import schema from './base';
 
-export const isProductionMode = process.env.NODE_ENV === ENV_PROD;
+export const isProductionMode = (process.env.NODE_ENV === ENV_PROD);
 
 export default () => {
   const app = express();
@@ -33,7 +33,6 @@ export default () => {
   app.use('/graphql', graphqlHTTP(req => ({
     schema,
     context: {
-      isProductionMode,
       db: {
         sequelize: require('./models').default,
       },
