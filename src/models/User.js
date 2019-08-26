@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import { generatePasswordHash } from '../utils/auth';
 
 export default (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
@@ -30,8 +30,7 @@ export default (sequelize, DataTypes) => {
   }, { sequelize });
 
   User.beforeCreate(async ({ dataValues }) => {
-    const saltRounds = parseInt(process.env.SALT_ROUNDS, 10);
-    const phash = await bcrypt.hash(dataValues.password, saltRounds);
+    const phash = await generatePasswordHash(dataValues.password);
     dataValues.password = phash;
     return dataValues;
   });
