@@ -42,7 +42,7 @@ export default class Controller {
 
   static async getUsers({ db: { sequelize }, auth: { user } }) {
     return loaderWithCache({
-      cacheKey: `users:${user.id}`,
+      cacheKey: `:users:${user.id}`,
       loaderInstance: getUsersLoader({ sequelize }),
       keys: [],
     });
