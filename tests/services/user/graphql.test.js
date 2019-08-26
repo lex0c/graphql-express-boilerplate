@@ -35,7 +35,6 @@ describe('User Service', () => {
       };
       return graphqlTest(query, variables).expect(({ body: { data } }) => {
         expect(data.createUser).not.toBeNull();
-        expect(data).toHaveProperty('createUser.id', 2);
         expect(data).toHaveProperty('createUser.firstName', variables.firstName);
         expect(data).toHaveProperty('createUser.lastName', variables.lastName);
         expect(data).toHaveProperty('createUser.email', variables.email);
