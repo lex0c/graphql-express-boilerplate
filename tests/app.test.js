@@ -1,21 +1,14 @@
-import request from 'supertest';
 import '@babel/polyfill';
 
-import setup from '../src/app';
-
-const app = setup();
+import { graphqlTest } from './test';
 
 describe('Graphql Server', () => {
-  it('Should response the GET with success', () => {
-    return request(app)
-      .get('/graphql?query={test}')
-      .expect('Content-Type', /json/)
+  it('Should success', () => {
+    return graphqlTest('{test}')
       .expect(({ body }) => {
         const { data, extensions } = body;
-        if (!('test' in data)) throw new Error('missing test');
-        if (data.test !== 'ok') throw new Error('query "test" not retrieve "ok" value');
-        if (!extensions) throw new Error('missing extensions');
+        expect(data).toHaveProperty('test', 'ok');
+        expect(extensions).toHaveProperty('queryTimeMeasurement');
       })
-      .expect(200);
   });
 });

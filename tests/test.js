@@ -5,7 +5,7 @@ import setup from '../src/app';
 
 const app = setup();
 
-export const graphqlQueryBuilder = (query, variables) => ({
+export const makeGraphqlQuery = (query, variables) => ({
   query,
   variables,
 });
@@ -17,7 +17,7 @@ export const graphqlTest = (
   ) => {
   return request(app)
     .post('/graphql')
-    .send(graphqlQueryBuilder(query, variables))
+    .send(makeGraphqlQuery(query, variables))
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(statusCode)
