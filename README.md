@@ -84,6 +84,10 @@ Starter for a flexible and scalable GraphQL server for Nodejs with Expressjs.
 - **npm run orm**
 
      ORM super powers
+   
+- **npm run genvs**
+
+     Generate `.env` and `.env.test`
      
 ### SECURITY
 
