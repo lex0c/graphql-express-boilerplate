@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 
 import { encode } from '../../utils/auth';
 import { loaderWithCache } from '../../utils/cache';
+import { esGet } from '../../utils/elasticsearch';
 
 import {
   USER_EMAIL_ALREADY_IN_USE,
@@ -47,4 +48,16 @@ export default class Controller {
       keys: [],
     });
   }
+
+  static async searchByTerm(term) {
+    const query = `{"query":{"wildcard":{"email":"*${term}*"}}}`;
+    const resp = await esGet('users', query);
+    if (resp) {
+      const { hits } = JSON.parse(resp).hits;
+      const users = hits.map(h => ({ ...h._source }));
+      return users;
+    }
+    return [];
+  }
 }
+

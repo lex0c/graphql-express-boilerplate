@@ -14,7 +14,7 @@
     "pretest": "node scripts/remove-db-test.js && NODE_ENV=test npx sequelize db:migrate && NODE_ENV=test npx sequelize db:seed:all",
     "posttest": "NODE_ENV=test npx sequelize db:seed:undo:all && NODE_ENV=test npx sequelize db:migrate:undo:all",
     "genvs": "node scripts/create-envs.js",
-    "upjobs": "node jobs/index.js&"
+    "upjobs": "babel-node jobs/index.js"
   },
   "jest": {
     "verbose": true,

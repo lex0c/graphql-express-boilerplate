@@ -5,6 +5,7 @@ export const schemas = `
   extend type Query {
     me: User!
     users: [User]!
+    searchByTerm(term: String!): [User!]
   }
   extend type Mutation {
     auth(input: AuthInput!): AuthData!
@@ -41,6 +42,10 @@ export const resolvers = {
     users: (_, __, context) => {
       checkAuthorization(context.auth);
       return Controller.getUsers(context);
+    },
+    searchByTerm: (_, { term }, { auth }) => {
+      checkAuthorization(auth);
+      return Controller.searchByTerm(term);
     },
   },
   Mutation: {
