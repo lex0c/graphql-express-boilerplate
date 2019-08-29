@@ -5,9 +5,7 @@ import cron from 'node-cron';
 try {
   fs.readdirSync(path.resolve(`${__dirname}`)).forEach(file => {
     if (file.substr(-7) === '.job.js') {
-      require(`${__dirname}/${file}`).default(cron, {
-        sequelize: require('../src/models').default,
-      });
+      require(`${__dirname}/${file}`).default(cron);
     }
   });
 } catch (err) {
