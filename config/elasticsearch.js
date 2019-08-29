@@ -5,5 +5,15 @@ require('dotenv').config({
 });
 
 module.exports = {
-  host: process.env.ES_HOST,
+  node: process.env.ES_HOST,
+  maxRetries: 5,
+  requestTimeout: 60000,
+  sniffOnStart: true,
+  // ssl: null,
+  // cloud: { id: null },
+  // auth: {
+  //  username: null,
+  //  password: null,
+  //  apiKey: null,
+  // },
 };

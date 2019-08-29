@@ -1,27 +1,15 @@
-import fetch from 'node-fetch';
-import { exec } from 'child_process';
+import { Client } from '@elastic/elasticsearch';
 
 import esConfig from '../../config/elasticsearch';
 
-export const esFetch = (resource, method, body = null) => {
-  return fetch(`${esConfig.host}/${resource}`, {
-    method,
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Accept-Charset": "utf-8"
-    },
-    body,
-  }).then(res => res.json());
-};
+const client = new Client(esConfig);
+
+export default client;
 
 export const esGet = (resource, query) => {
-  return new Promise((resolve, reject) => {
-    const curl = `curl -XGET ${esConfig.host}/${resource}/_search -H 'Content-Type: application/json' -d '${query}'`;
-    exec(curl, (err, stdout) => {
-      if (err) reject(err);
-      resolve(stdout);
-    });
+  return client.search({
+    index: resource,
+    body: JSON.stringify(query),
   });
 };
 
@@ -31,6 +19,6 @@ export const esBulkSync = (type, data) => {
     body += `{ "index" : { "_index" : "${type}", "_id" : "${d.id}"} }\n`;
     body += `${JSON.stringify(d)}\n`;
   });
-  return esFetch('_bulk', 'POST', body);
+  return client.bulk({ index: type, body });
 };
 

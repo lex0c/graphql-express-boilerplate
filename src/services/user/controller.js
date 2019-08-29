@@ -50,10 +50,10 @@ export default class Controller {
   }
 
   static async searchByTerm(term) {
-    const query = `{"query":{"wildcard":{"email":"*${term}*"}}}`;
+    const query = { query: { wildcard: { email :`*${term}*` } } };
     const resp = await esGet('users', query);
-    if (resp) {
-      const { hits } = JSON.parse(resp).hits;
+    if (resp && resp.body) {
+      const { hits } = resp.body.hits;
       const users = hits.map(h => ({ ...h._source }));
       return users;
     }

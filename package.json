@@ -13,8 +13,8 @@
     "test": "NODE_ENV=test npx jest --colors --testPathIgnorePatterns tests/test.js",
     "pretest": "node scripts/remove-db-test.js && NODE_ENV=test npx sequelize db:migrate && NODE_ENV=test npx sequelize db:seed:all",
     "posttest": "NODE_ENV=test npx sequelize db:seed:undo:all && NODE_ENV=test npx sequelize db:migrate:undo:all",
-    "genvs": "node scripts/create-envs.js",
-    "upjobs": "babel-node jobs/index.js"
+    "envs:generate": "node scripts/create-envs.js",
+    "jobs:up": "babel-node jobs/index.js"
   },
   "jest": {
     "verbose": true,
@@ -33,6 +33,7 @@
     "@babel/node": "^7.5.5",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
+    "@elastic/elasticsearch": "^7.3.0",
     "aws-sdk": "^2.518.0",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.18.2",
@@ -50,7 +51,6 @@
     "moment": "^2.24.0",
     "mongoose": "^5.6.11",
     "node-cron": "^2.0.3",
-    "node-fetch": "^2.6.0",
     "pg": "^7.12.1",
     "pg-hstore": "^2.3.3",
     "redis": "^2.8.0",
