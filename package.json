@@ -9,12 +9,12 @@
     "start": "nodemon --exec babel-node src/index.js --inspect",
     "prod": "npm run lint && NODE_ENV=production babel-node src/index.js",
     "orm": "npx sequelize",
-    "lint": "npx eslint .",
-    "test": "NODE_ENV=test npx jest --colors --testPathIgnorePatterns tests/test.js",
-    "pretest": "node scripts/remove-db-test.js && NODE_ENV=test npx sequelize db:migrate && NODE_ENV=test npx sequelize db:seed:all",
-    "posttest": "NODE_ENV=test npx sequelize db:seed:undo:all && NODE_ENV=test npx sequelize db:migrate:undo:all",
+    "lint": "eslint .",
+    "test": "NODE_ENV=test jest --colors --testPathIgnorePatterns tests/test.js",
+    "pretest": "node scripts/remove-db-test.js && NODE_ENV=test sequelize db:migrate && NODE_ENV=test sequelize db:seed:all",
+    "posttest": "NODE_ENV=test sequelize db:seed:undo:all && NODE_ENV=test sequelize db:migrate:undo:all",
     "envs:generate": "node scripts/create-envs.js",
-    "jobs:up": "babel-node jobs/index.js"
+    "jobs:up": "babel-node jobs/index.js&"
   },
   "jest": {
     "verbose": true,
