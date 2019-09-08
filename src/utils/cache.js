@@ -32,7 +32,7 @@ client.flushAndQuit = () => {
 
 client.on('connect', () => {});
 client.on('reconnecting', () => {});
-client.on('error', (err) => {});
+client.on('error', () => {});
 client.on('end', () => {});
 
 export default client;
