@@ -7,11 +7,8 @@ services:
   api:
     build:
       context: .
-    volumes:
-      - .:/var/www/api
     environment:
       - API_SECRET_KEY=foobar
-    command: bash -c "npm run prod"
     networks:
       - web
     ports:

@@ -6,8 +6,8 @@
   "license": "MIT",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js --inspect",
-    "prod": "NODE_ENV=production babel-node src/index.js",
+    "dev": "nodemon --exec babel-node src/index.js --inspect",
+    "start": "NODE_ENV=production babel-node src/index.js",
     "orm": "npx sequelize",
     "lint": "eslint .",
     "test": "NODE_ENV=test jest --colors --testPathIgnorePatterns tests/test.js",

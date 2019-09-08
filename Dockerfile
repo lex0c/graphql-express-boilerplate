@@ -14,9 +14,11 @@ RUN mkdir -p /var/www/api
 
 COPY . /var/www/api/
 
-WORKDIR /var/www/api
+WORKDIR /var/www/api/
 
-CMD ["npm", "ci"]
+RUN npm ci
 
 EXPOSE 4000/tcp
+
+CMD ["npm", "start"]
 
