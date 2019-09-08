@@ -32,9 +32,7 @@ client.flushAndQuit = () => {
 
 client.on('connect', () => {});
 client.on('reconnecting', () => {});
-client.on('error', (err) => {
-  global.console.error(err);
-});
+client.on('error', (err) => {});
 client.on('end', () => {});
 
 export default client;
@@ -48,3 +46,30 @@ export const loaderWithCache = async ({
   return Promise.race([Promise.resolve(JSON.parse(cache)), resp]);
 };
 
+export const getFromCacheIfExists = async (
+  cacheKey, loader, params, expire,
+) => {
+  let cache = null;
+
+  try {
+    cache = await client.getAsync(cacheKey);
+  } catch (err) {
+    global.console.error(err);
+  }
+
+  if (!cache) {
+    const resp = await loader(params);
+    cache = resp;
+    if (resp) {
+      try {
+        client.set(cacheKey, JSON.stringify(resp), 'EX', expire);
+      } catch (err) {
+        global.console.error(err);
+      }
+    }
+  } else {
+    cache = JSON.parse(cache);
+  }
+
+  return Promise.resolve(cache);
+};
