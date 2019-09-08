@@ -19,7 +19,7 @@ Starter for a flexible and scalable GraphQL server for Nodejs with Expressjs.
 
 3. **Run server**
 
-   `npm start` or `npm run prod` or `docker-compose up`
+   `npm start` or `npm run dev` or `docker-compose up`
 
    ###### Server should be running at http://localhost:4000/graphql
    
@@ -67,11 +67,11 @@ Starter for a flexible and scalable GraphQL server for Nodejs with Expressjs.
 ### Scripts
 - **npm start**
 
-     Start nodemon dev server
-
-- **npm run prod**
-
      Start server
+
+- **npm run dev**
+
+     Start nodemon dev server
 
 - **npm run lint**
 
@@ -79,7 +79,7 @@ Starter for a flexible and scalable GraphQL server for Nodejs with Expressjs.
 
 - **npm test**
 
-     Runs unit tests
+     Runs tests
      
 - **npm run orm**
 
