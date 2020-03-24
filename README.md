@@ -100,7 +100,7 @@ If you discover security related issues, please email leonardo_carvalho@outlook.
 
 #### To contributions 
 
-Please, see [doc for contribute](https://github.com/lleocastro/graphql-express-boilerplate/blob/master/CONTRIBUTE.md). Thanks!
+Please, see [doc for contribute](/CONTRIBUTE.md). Thanks!
 
 
 #### License
