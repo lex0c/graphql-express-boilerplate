@@ -4,6 +4,11 @@ import { graphqlTest } from '../../test';
 
 import { EMAIL_OR_PASSWORD_INCORRECT } from '../../../src/constants';
 
+const authUser = {
+  email: faker.internet.email(),
+  password: faker.random.words(3).replace(/\s/g, ''),
+}
+
 describe('User Service', () => {
   describe('CRUD', () => {
     it('Should create new user', (done) => {
@@ -27,12 +32,13 @@ describe('User Service', () => {
           }
         }
       `;
+
       const variables = {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
-        email: faker.internet.email(),
-        password: faker.random.words(3).replace(/\s/g, ''),
+        ...authUser,
       };
+
       return graphqlTest(query, variables).expect(({ body: { data } }) => {
         expect(data.createUser).not.toBeNull();
         expect(data).toHaveProperty('createUser.firstName', variables.firstName);
@@ -58,10 +64,8 @@ describe('User Service', () => {
 
   describe('Authenticate', () => {
     it('Should authenticate with valid credentials and retrieve token', (done) => {
-      const variables = {
-        email: 'testerson@system.com',
-        password: process.env.TESTERSON_PASSWORD,
-      };
+      const variables = { ...authUser };
+
       return graphqlTest(queryAuth, variables).expect(({ body: { data: { auth } } }) => {
         expect(auth).toHaveProperty('token');
         expect(auth.token).not.toBe('');
@@ -72,10 +76,8 @@ describe('User Service', () => {
     });
 
     it('Should authenticate with invalid credentials and get an error', (done) => {
-      const variables = {
-        email: 'testerson@system.com',
-        password: 'foo',
-      };
+      const variables = { email: 'testerson@system.com', password: 'foo' };
+
       return graphqlTest(queryAuth, variables, 500).expect(({ body: { errors } }) => {
         const error = errors[0];
         expect(error).not.toBeUndefined();
@@ -89,14 +91,16 @@ describe('User Service', () => {
 
   describe('My Data', () => {
     let token = null;
+
     const variables = {
-      email: 'testerson@system.com',
-      password: process.env.TESTERSON_PASSWORD,
+      ...authUser,
     };
+
     beforeAll(async () => {
       const { body: { data: { auth } } } = await graphqlTest(queryAuth, variables);
       token = auth.token;
     });
+
     it('Should get my user data', (done) => {
       const query = `
         {
@@ -105,6 +109,7 @@ describe('User Service', () => {
           }
         }
       `;
+
       return graphqlTest(query)
         .set('Authorization', `Bearer ${token}`)
         .expect(({ body: { data } }) => {
