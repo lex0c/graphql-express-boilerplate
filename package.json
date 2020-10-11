@@ -35,7 +35,7 @@
     "@babel/preset-env": "^7.11.5",
     "@elastic/elasticsearch": "^7.9.1",
     "aws-sdk": "^2.771.0",
-    "bcrypt": "^3.0.8",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.18.2",
     "cors": "^2.8.5",
     "dataloader": "^1.4.0",
