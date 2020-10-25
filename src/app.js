@@ -3,7 +3,7 @@ import graphqlHTTP from 'express-graphql';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import cors from 'cors';
-import moment from 'moment';
+import { getMilliseconds } from 'date-fns';
 
 import { ENV_PROD, TOKEN_HEADER_NAME } from './constants';
 
@@ -38,11 +38,11 @@ export default () => {
         user: getUserByToken(req.headers[TOKEN_HEADER_NAME]),
         token: extractToken(req.headers[TOKEN_HEADER_NAME]),
       },
-      startTime: moment().milliseconds(),
+      startTime: getMilliseconds(new Date()),
     },
     extensions: ({ context }) => {
       return {
-        queryTimeMeasurement: Math.abs(moment().milliseconds() - context.startTime),
+        queryTimeMeasurement: Math.abs(getMilliseconds(new Date()) - context.startTime),
       };
     },
     customFormatErrorFn: err => {

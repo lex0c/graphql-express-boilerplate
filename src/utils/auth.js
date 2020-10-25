@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import moment from 'moment';
+import { addHours, getTime } from 'date-fns';
 
 import { UNAUTHORIZED, TOKEN_EXPIRED } from '../constants';
 
 export const encode = payload => jwt.sign({
-  exp: moment().add(1, 'H').valueOf(),
+  exp: getTime(addHours(new Date(), 1)),
   user: payload
 }, process.env.APP_SECRET_KEY);
 
@@ -13,7 +13,7 @@ export const decode = token => jwt.verify(token, process.env.APP_SECRET_KEY);
 
 export const checkAuthorization = ({ user, token }) => {
   if (!user) throw new Error(UNAUTHORIZED);
-  if (moment() > moment(decode(token).exp)) throw new Error(TOKEN_EXPIRED);
+  if (new Date() > new Date(decode(token).exp)) throw new Error(TOKEN_EXPIRED);
 };
 
 export const getUserByToken = token => token && decode(extractToken(token)).user;
@@ -24,6 +24,5 @@ export const extractToken = rawToken => {
 };
 
 export const generateHash = (plainPassword) => {
-  const saltRounds = parseInt(12, 10);
-  return bcrypt.hash(plainPassword, saltRounds);
+  return bcrypt.hash(plainPassword, parseInt(12, 10));
 };
