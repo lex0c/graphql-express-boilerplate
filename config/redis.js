@@ -1,8 +1,4 @@
-import { ENV_TEST } from '../src/constants';
-
-require('dotenv').config({
-  path: (process.env.NODE_ENV !== ENV_TEST) ? '.env' : '.env.test',
-});
+require('dotenv').config({ path: '.env' });
 
 module.exports = {
   host: process.env.CACHE_HOST,

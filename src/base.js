@@ -23,4 +23,5 @@ const resolversBase = {
 
 export const typeDefs = schemaBase.concat(services.schemas).replace(/,/g, '');
 export const resolvers = merge(resolversBase, services.resolvers);
+
 export default makeExecutableSchema({ typeDefs, resolvers });

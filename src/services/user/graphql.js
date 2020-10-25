@@ -4,8 +4,6 @@ import { checkAuthorization } from '../../utils/auth';
 export const schemas = `
   extend type Query {
     me: User!
-    users: [User]!
-    searchUsersByTerm(term: String!): [User!]
   }
   extend type Mutation {
     auth(input: AuthInput!): AuthData!
@@ -16,8 +14,7 @@ export const schemas = `
     password: String!
   }
   input CreateUserInput {
-    firstName: String!
-    lastName: String!
+    name: String!
     email: String!
     password: String!
   }
@@ -25,9 +22,8 @@ export const schemas = `
     token: String!
   }
   type User {
-    id: Int
-    firstName: String
-    lastName: String
+    id: Int!
+    name: String
     email: String
     createdAt: Date
   }
@@ -38,14 +34,6 @@ export const resolvers = {
     me: (_, __, { auth }) => {
       checkAuthorization(auth);
       return { ...auth.user };
-    },
-    users: (_, __, context) => {
-      checkAuthorization(context.auth);
-      return Controller.getUsers(context);
-    },
-    searchUsersByTerm: (_, { term }, { auth }) => {
-      checkAuthorization(auth);
-      return Controller.searchByTerm(term);
     },
   },
   Mutation: {
@@ -59,5 +47,6 @@ export const resolvers = {
 };
 
 export default {
-  schemas, resolvers,
+  schemas,
+  resolvers,
 };

@@ -1,63 +1,42 @@
 import bcrypt from 'bcrypt';
 
 import { encode } from '../../utils/auth';
-import { loaderWithCache } from '../../utils/cache';
-import { esGet } from '../../utils/elasticsearch';
 
 import {
   USER_EMAIL_ALREADY_IN_USE,
   EMAIL_OR_PASSWORD_INCORRECT,
 } from '../../constants';
 
-import { getUsersLoader } from './loaders';
+import User from './model';
 
 export default class Controller {
-  static async createUser({ input }, { db: { sequelize } }) {
-    if (!(await sequelize.User.findOne({ where: { email: input.email } }))) {
-      return sequelize.User.create(input);
+  static async createUser({ input }, { db: { knex } }) {
+    const userContext = User.setContext({ db: knex });
+
+    const user = await userContext.findOneByEmail(input.email);
+
+    if (!user) {
+      return userContext.createOne(input);
     }
 
     throw new Error(USER_EMAIL_ALREADY_IN_USE);
   }
 
-  static async authenticate({ input }, { db: { sequelize } }) {
-    const user = await sequelize.User.findOne({ where: { email: input.email } });
+  static async authenticate({ input }, { db: { knex } }) {
+    const userContext = User.setContext({ db: knex });
 
-    if (user) {
-      const { dataValues } = user;
-      const match = await bcrypt.compare(input.password, dataValues.password);
-      if (match) {
-        return {
-          token: encode({
-            id: dataValues.id,
-            email: dataValues.email,
-            firstName: dataValues.firstName,
-            lastName: dataValues.lastName,
-          }),
-        };
-      }
+    const user = await userContext.findOneByEmail(input.email);
+
+    if (user && (await bcrypt.compare(input.password, user.password_hash))) {
+      return {
+        token: encode({
+          id: user.id,
+          email: user.email,
+          name: user.name,
+        }),
+      };
     }
 
     throw new Error(EMAIL_OR_PASSWORD_INCORRECT);
   }
-
-  static async getUsers({ db: { sequelize }, auth: { user } }) {
-    return loaderWithCache({
-      cacheKey: `:users:${user.id}`,
-      loaderInstance: getUsersLoader({ sequelize }),
-      keys: [],
-    });
-  }
-
-  static async searchByTerm(term) {
-    const query = { query: { wildcard: { email :`*${term}*` } } };
-    const resp = await esGet('users', query);
-    if (resp && resp.body) {
-      const { hits } = resp.body.hits;
-      const users = hits.map(h => ({ ...h._source }));
-      return users;
-    }
-    return [];
-  }
 }
-

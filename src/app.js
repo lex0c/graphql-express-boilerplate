@@ -5,11 +5,9 @@ import helmet from 'helmet';
 import cors from 'cors';
 import moment from 'moment';
 
-import { ENV_PROD, ENV_TEST, TOKEN_HEADER_NAME } from './constants';
+import { ENV_PROD, TOKEN_HEADER_NAME } from './constants';
 
-require('dotenv').config({
-  path: process.env.NODE_ENV !== ENV_TEST ? '.env' : '.env.test',
-});
+require('dotenv').config({ path: '.env' });
 
 import { getUserByToken, extractToken } from './utils/auth';
 
@@ -34,7 +32,7 @@ export default () => {
     schema,
     context: {
       db: {
-        sequelize: require('./models').default,
+        knex: require('knex')(require('./../knexfile.js')[process.env.NODE_ENV]),
       },
       auth: {
         user: getUserByToken(req.headers[TOKEN_HEADER_NAME]),

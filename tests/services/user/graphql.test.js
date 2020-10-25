@@ -14,36 +14,28 @@ describe('User Service', () => {
     it('Should create new user', (done) => {
       const query = `
         mutation createUser(
-          $firstName: String!
-          $lastName: String!
+          $name: String!
           $email: String!
           $password: String!
         ) {
           createUser(input: {
-            firstName: $firstName,
-            lastName: $lastName,
+            name: $name,
             email: $email,
             password: $password
           }) {
             id
-            firstName
-            lastName
-            email
           }
         }
       `;
 
       const variables = {
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
+        name: faker.name.findName(),
         ...authUser,
       };
 
       return graphqlTest(query, variables).expect(({ body: { data } }) => {
         expect(data.createUser).not.toBeNull();
-        expect(data).toHaveProperty('createUser.firstName', variables.firstName);
-        expect(data).toHaveProperty('createUser.lastName', variables.lastName);
-        expect(data).toHaveProperty('createUser.email', variables.email);
+        expect(data.createUser.id).not.toBeNull();
       }).end((err) => {
         if (err) return done(err);
         done();
@@ -65,7 +57,7 @@ describe('User Service', () => {
   describe('Authenticate', () => {
     it('Should authenticate with valid credentials and retrieve token', (done) => {
       const variables = { ...authUser };
-
+  
       return graphqlTest(queryAuth, variables).expect(({ body: { data: { auth } } }) => {
         expect(auth).toHaveProperty('token');
         expect(auth.token).not.toBe('');
@@ -77,7 +69,7 @@ describe('User Service', () => {
 
     it('Should authenticate with invalid credentials and get an error', (done) => {
       const variables = { email: 'testerson@system.com', password: 'foo' };
-
+  
       return graphqlTest(queryAuth, variables, 500).expect(({ body: { errors } }) => {
         const error = errors[0];
         expect(error).not.toBeUndefined();
@@ -105,6 +97,7 @@ describe('User Service', () => {
       const query = `
         {
           me {
+            id
             email
           }
         }
@@ -114,6 +107,7 @@ describe('User Service', () => {
         .set('Authorization', `Bearer ${token}`)
         .expect(({ body: { data } }) => {
           expect(data.me).not.toBeNull();
+          expect(data.me.id).not.toBeNull();
           expect(data).toHaveProperty('me.email', variables.email);
         }).end((err) => {
           if (err) return done(err);

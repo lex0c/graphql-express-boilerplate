@@ -23,7 +23,7 @@ export const extractToken = rawToken => {
   return token && token.trim();
 };
 
-export const generatePasswordHash = (plainPassword) => {
-  const saltRounds = parseInt(process.env.SALT_ROUNDS, 10);
+export const generateHash = (plainPassword) => {
+  const saltRounds = parseInt(12, 10);
   return bcrypt.hash(plainPassword, saltRounds);
 };
